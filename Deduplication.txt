@@ -1,0 +1,10 @@
+with metabase_registration_row_no as(
+    select *,
+        row_number () over (partition by email_masked) as row_no
+    from raw_gsheets.metabase_registration
+    order by timestamp
+)
+
+select *
+from metabase_registration_row_no
+where row_no = 1
